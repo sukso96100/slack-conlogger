@@ -1,0 +1,14 @@
+{
+  "name": "conflogbot",
+  "version": "1.0.0",
+  "description": "Conference Logging Bot for Slack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Youngbin Han",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/client": "^3.1.0"
+  }
+}
