@@ -3,11 +3,14 @@ var mRecord;
 var channelId;
 var data = [];
 var fs = require('fs');
+var jsontomd = require("./jsontomd");
+var moment = require('moment');
 
 var doWork = function(msg, userobj, rtm){
   if(msg.text.includes("회의")&&msg.text.includes("시작")){
     startRecording(msg, userobj, rtm);
-  }else if (msg.text.includes("회의")&&msg.text.includes("종료"||"끝"||"여기까지")) {
+  }else if (msg.text.includes("회의")
+  &&(msg.text.includes("종료")||msg.text.includes("끝")||msg.text.includes("여기까지"))) {
     endRecording(msg, userobj, rtm);
   }
   if(mRecord==true){
@@ -30,46 +33,68 @@ var doWork = function(msg, userobj, rtm){
   function endRecording(msg, userobj, rtm){
     if(mUserObj==userobj&&mRecord==true){
       rtm.sendMessage(userobj.name+" 에 의해 회의가 끝났습니다.", msg.channel);
+      rtm.sendMessage("회의록 파일을 처리 중이며, 곧 여기에 업로드 됩니다.", msg.channel);
       mRecord = false;
       mUserObj = undefined;
       channelId = undefined;
-      afterLogging();
+      afterLogging(msg, rtm);
     }else {
       rtm.sendMessage(userobj.name+" 만이 회의를 마칠 수 있습니다.", msg.channel);
     }
   }
 
 function beforeLogging(){
-
+  data = [];
 }
 
 function doLogging(msg, rtm){
   if(msg.channel==channelId){
     console.log("LOGGING...");
     if(msg.text.startsWith("안건:") || msg.text.startsWith("안건 :")){
+      //안건 추가
         var subject = msg.text;
         subject = subject.replace("안건:", "");
         subject = subject.replace("안건 :", "");
-        data.push({"type":"subject", "time": new Date(), "text": subject});
+        data.push({"type":"subject", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_z"), "text": subject});
         console.log("New Subject: "+subject);
         rtm.sendMessage("*새 안건이 추가되었습니다.*", channelId);
         rtm.sendMessage("_"+subject+"_", channelId);
     }else if(msg.text.startsWith("메모:") || msg.text.startsWith("메모 :")){
+      //메모 추가
         var memo = msg.text;
         memo = memo.replace("메모:", "");
         memo = memo.replace("메모 :", "");
-        data.push({"type":"memo", "time": new Date(), "text": memo});
+        data.push({"type":"memo", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_z"), "text": memo});
         console.log("New Memo: "+memo);
         rtm.sendMessage("*새 메모가 추가되었습니다.*", channelId);
         rtm.sendMessage("_"+memo+"_", channelId);
+    }else if(msg.text.includes("안건 보여줘") || msg.text.includes("안건 보기") ){
+      //안건 목록 보이기
+      rtm.sendMessage("*지금까지 회의중 추가된 모든 안건 목록입니다.*", channelId);
+      for(var i=0; i<data.length; i++){
+        if(data[i].type=="subject"){
+          rtm.sendMessage("_"+data[i].text+"_", channelId);
+        }
+      }
+    }else if(msg.text.includes("메모 보여줘") || msg.text.includes("메모 보기") ){
+      //메모 목록 보이기
+      rtm.sendMessage("*지금까지 회의중 추가된 모든 메모 목록입니다.*", channelId);
+      for(var i=0; i<data.length; i++){
+        if(data[i].type=="memo"){
+          rtm.sendMessage("_"+data[i].text+"_", channelId);
+        }
+      }
     }else {
-      data.push({"type":"talk", "time": new Date(), "text": msg.text});
+      data.push({"type":"talk", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_Z"),
+       "text": rtm.dataStore.getUserById(msg.user).name + " : " + msg.text});
     }
   }
 }
 
-function afterLogging(){
+function afterLogging(msg, rtm){
   fs.writeFileSync('record.json', JSON.stringify(data), 'utf8');
+  jsontomd(msg, rtm);
 }
+
 
 module.exports=doWork;
