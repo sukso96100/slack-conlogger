@@ -16,6 +16,7 @@ MIT License
 - https://developers.google.com/drive/v3/web/about-auth
 - https://developers.google.com/drive/v3/web/folder
 - http://momentjs.com/
+- https://nodejs.org/api/fs.html
 
 ## 봇 실행하기
 - `start.sh` 파일을 열고. 환경 변수를 필요에 따라 수정합니다.
