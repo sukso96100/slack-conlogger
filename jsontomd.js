@@ -37,8 +37,8 @@ var processFile = function(msg, rtm){
     }
   }
 
-  fs.writeFile(teamname+"@"+jsonData[0].time+'.md', mdData, 'utf8', function(){
-    uploader.uploadFile(rtm, msg, teamname+"@"+jsonData[0].time+'.md');
+  fs.writeFile("tmp/"+teamname+"@"+jsonData[0].time+'.md', mdData, 'utf8', function(){
+    uploader.uploadFile(rtm, msg, "tmp/"+teamname+"@"+jsonData[0].time+'.md');
 
   });
 }

@@ -1,9 +1,10 @@
 {
-  "name": "conflogbot",
+  "name": "conlogger",
   "version": "1.0.0",
   "description": "Conference Logging Bot for Slack",
   "main": "index.js",
   "scripts": {
+    "start": "bash start.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Youngbin Han",
