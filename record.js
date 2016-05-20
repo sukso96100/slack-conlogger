@@ -13,6 +13,7 @@ var fs = require('fs');
 var jsontomd = require("./jsontomd");
 var moment = require('moment');
 var timezone = process.env.UTC_OFFSET;
+var timeformat = "YYYY.MM.DD_hh:mm:ss_A_Z"
 
 var doWork = function(msg, userobj, rtm){
   // 수신 받은 메시지 처리
@@ -66,7 +67,7 @@ function doLogging(msg, rtm){
         var subject = msg.text;
         subject = subject.replace("안건:", "");
         subject = subject.replace("안건 :", "");
-        data.push({"type":"subject", "time": moment().utcOffset(timezone).format("YYYY.MM.DD_HH:MM:SS_A_Z"), "text": subject});
+        data.push({"type":"subject", "time": moment().utcOffset(timezone).format(timeformat), "text": subject});
         console.log("New Subject: "+subject);
         rtm.sendMessage("*새 안건이 추가되었습니다.*", channelId);
         rtm.sendMessage("_"+subject+"_", channelId);
@@ -75,7 +76,7 @@ function doLogging(msg, rtm){
         var memo = msg.text;
         memo = memo.replace("메모:", "");
         memo = memo.replace("메모 :", "");
-        data.push({"type":"memo", "time": moment().utcOffset(timezone).format("YYYY.MM.DD_HH:MM:SS_A_Z"), "text": memo});
+        data.push({"type":"memo", "time": moment().utcOffset(timezone).format(timeformat), "text": memo});
         console.log("New Memo: "+memo);
         rtm.sendMessage("*새 메모가 추가되었습니다.*", channelId);
         rtm.sendMessage("_"+memo+"_", channelId);
@@ -97,7 +98,7 @@ function doLogging(msg, rtm){
       }
     }else {
       //대회 내용 기록
-      data.push({"type":"talk", "time": moment().utcOffset(timezone).format("YYYY.MM.DD_HH:MM:SS_A_Z"),
+      data.push({"type":"talk", "time": moment().utcOffset(timezone).format(timeformat),
        "text": rtm.dataStore.getUserById(msg.user).name + " : " + msg.text});
     }
   }
