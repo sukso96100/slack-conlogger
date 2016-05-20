@@ -1,3 +1,10 @@
+/*
+Copyright (C) 2016 Youngbin Han <sukso96100@gmail.com>
+Licensed under the MIT License
+This file is a part of slack-conlogger
+https://github.com/sukso96100/slack-conlogger
+*/
+
 var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
