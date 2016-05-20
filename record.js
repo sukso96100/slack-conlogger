@@ -33,7 +33,6 @@ var doWork = function(msg, userobj, rtm){
   function endRecording(msg, userobj, rtm){
     if(mUserObj==userobj&&mRecord==true){
       rtm.sendMessage(userobj.name+" 에 의해 회의가 끝났습니다.", msg.channel);
-      rtm.sendMessage("회의록 파일을 처리 중이며, 곧 여기에 업로드 됩니다.", msg.channel);
       mRecord = false;
       mUserObj = undefined;
       channelId = undefined;
@@ -55,7 +54,7 @@ function doLogging(msg, rtm){
         var subject = msg.text;
         subject = subject.replace("안건:", "");
         subject = subject.replace("안건 :", "");
-        data.push({"type":"subject", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_z"), "text": subject});
+        data.push({"type":"subject", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_Z"), "text": subject});
         console.log("New Subject: "+subject);
         rtm.sendMessage("*새 안건이 추가되었습니다.*", channelId);
         rtm.sendMessage("_"+subject+"_", channelId);
@@ -64,7 +63,7 @@ function doLogging(msg, rtm){
         var memo = msg.text;
         memo = memo.replace("메모:", "");
         memo = memo.replace("메모 :", "");
-        data.push({"type":"memo", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_z"), "text": memo});
+        data.push({"type":"memo", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_Z"), "text": memo});
         console.log("New Memo: "+memo);
         rtm.sendMessage("*새 메모가 추가되었습니다.*", channelId);
         rtm.sendMessage("_"+memo+"_", channelId);

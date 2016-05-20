@@ -1,5 +1,5 @@
 var RtmClient = require('@slack/client').RtmClient;
-var token = process.env.SLACK_API_TOKEN || 'xoxb-43795926385-GdBzHzAg9Yv3M5vLJIVXAOit';
+var token = process.env.SLACK_API_TOKEN || 'xoxb-44195058997-2FCNpaLL8kLi1eRpSzKd7vom';
 
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS.RTM;
@@ -11,7 +11,7 @@ var rtm = new RtmClient(token, {
   dataStore: new MemoryDataStore(),
   autoReconnect: true});
 var doWork = require('./record');
-
+var uploader = require('./uploader');
 
 rtm.start();
 
@@ -25,5 +25,6 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message){
   console.log("CHANNEL - "+message.channel);
   if(message.text!=undefined){
     doWork(message, rtm.dataStore.getUserById(message.user), rtm);
+    uploader.getNewToken(rtm, message);
   }
 });
