@@ -3,6 +3,7 @@ var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 var o2c;
+var targetFolderId = process.env.GOOGLD_DRIVE_TARGET_FOLDER_ID;
 
 // var rtm;
 // var msg;
@@ -23,7 +24,7 @@ var uploadFile = function(rtm, msg, filename0){
   // msg = msg0;
   filename = filename0;
   // Load client secrets from a local file.
-  fs.readFile('client_secret_854196446304-m7au7k6i9gjko9cjt8m8pe09ck36f4lv.apps.googleusercontent.com.json',
+  fs.readFile(process.env.GOOGLE_CLIENT_SECRET_FILE,
    function processClientSecrets(err, content) {
     if (err) {
       console.log('Error loading client secret file: ' + err);
@@ -42,8 +43,8 @@ var uploadFile = function(rtm, msg, filename0){
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, rtm, msg) {
-  var clientSecret = credentials.installed.client_secret || 'Ge3lXNhKPRxF82yEINZXOTz9';
-  var clientId = credentials.installed.client_id || '854196446304-m7au7k6i9gjko9cjt8m8pe09ck36f4lv.apps.googleusercontent.com';
+  var clientSecret = credentials.installed.client_secret ;
+  var clientId = credentials.installed.client_id;
   var redirectUrl = credentials.installed.redirect_uris[0];
   var auth = new googleAuth();
   o2c = new auth.OAuth2(clientId, clientSecret, redirectUrl);
@@ -125,10 +126,9 @@ function storeToken(token) {
  */
 function uploadToDrive(rtm, msg) {
   var service = google.drive('v3');
-  var folderId = '0Bw6kbwsVuKuVMkR5My1jbGZNckU';
      var fileMetadata = {
        'name': filename,
-       parents: [ folderId ]
+       parents: [ targetFolderId ]
      };
      var media = {
        mimeType: 'text/plain',

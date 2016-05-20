@@ -1,5 +1,5 @@
 var RtmClient = require('@slack/client').RtmClient;
-var token = process.env.SLACK_API_TOKEN || 'xoxb-44195058997-2FCNpaLL8kLi1eRpSzKd7vom';
+var token = process.env.SLACK_API_TOKEN;
 
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS.RTM;
