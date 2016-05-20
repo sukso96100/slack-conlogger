@@ -1,0 +1,8 @@
+{
+  "name": "conlogger",
+  "description": "Conference Logging Bot for Slack",
+  "repository": "https://sukso@bitbucket.org/sukso/slack-conlogger.git",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "slack", "bot"],
+  "image": "heroku/nodejs"
+}
