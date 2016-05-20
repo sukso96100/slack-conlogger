@@ -1,3 +1,4 @@
 record.json
+node_modules/*
 auth/*
 tmp/*

@@ -16,6 +16,7 @@ var processFile = function(msg, rtm){
   // var channelname = rtm.dataStore.getChannelById(msg.channel).name + "("+msg.channel+")";
   var username = rtm.dataStore.getUserById(msg.user).name + "("+msg.user+")";
 
+  // 회의 정보 부분 처리
   mdData += "\n## 회의 정보\n";
   mdData += "- Slack 팀 이름 : " + teamname +"\n";
   // mdData += "- Slack 채널 이름 : " + channelname +"\n";
@@ -23,6 +24,7 @@ var processFile = function(msg, rtm){
   mdData += "- 회의 시작 시각 : " + jsonData[0].time +"\n";
   mdData += "- 회의 종료 시각 : " + jsonData[jsonData.length - 1].time +"\n";
 
+  // 안건 부분 처리
   mdData += "\n\n## 안건\n";
   for(var i=0; i<jsonData.length; i++){
     if(jsonData[i].type=="subject"){
@@ -30,6 +32,7 @@ var processFile = function(msg, rtm){
     }
   }
 
+  // 메모 부분 처리
   mdData += "\n\n## 메모\n";
   for(var i=0; i<jsonData.length; i++){
     if(jsonData[i].type=="memo"){
@@ -37,6 +40,7 @@ var processFile = function(msg, rtm){
     }
   }
 
+  // 그외 대화 기록 내용 처리
   mdData += "\n\n## 대화 기록\n";
   for(var i=0; i<jsonData.length; i++){
     if(jsonData[i].type=="talk"){
@@ -44,7 +48,9 @@ var processFile = function(msg, rtm){
     }
   }
 
+  // 처리 후, 마크다운 파일로 저장
   fs.writeFile(teamname+"@"+jsonData[0].time+'.md', mdData, 'utf8', function(){
+    //회의록 파일 업로드
     uploader.uploadFile(rtm, msg, teamname+"@"+jsonData[0].time+'.md');
 
   });

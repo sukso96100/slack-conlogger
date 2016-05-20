@@ -15,6 +15,7 @@ var moment = require('moment');
 var timezone = process.env.UTC_OFFSET;
 
 var doWork = function(msg, userobj, rtm){
+  // 수신 받은 메시지 처리
   if(msg.text.includes("회의")&&msg.text.includes("시작")){
     startRecording(msg, userobj, rtm);
   }else if (msg.text.includes("회의")

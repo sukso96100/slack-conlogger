@@ -6,7 +6,6 @@ https://github.com/sukso96100/slack-conlogger
 */
 
 var fs = require('fs');
-var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 var o2c;

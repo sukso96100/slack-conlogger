@@ -13,6 +13,7 @@ var RTM_CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS.RTM;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 var MemoryDataStore = require('@slack/client').MemoryDataStore;
 
+// Slack 클라이언트 초기화
 var rtm = new RtmClient(token, {
   logLevel: 'debug',
   dataStore: new MemoryDataStore(),
@@ -27,6 +28,7 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
 });
 
 rtm.on(RTM_EVENTS.MESSAGE, function(message){
+  // 메시지 수신 시 동작
   console.log("EVENTS - MESSAGE");
   console.log("MESSAGE - "+message.text);
   console.log("CHANNEL - "+message.channel);

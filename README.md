@@ -7,6 +7,16 @@ Youngbin Han(sukso96100@gmail.com)
 ## License
 MIT License
 
+## References
+- https://github.com/slackhq/node-slack-sdk
+- https://api.slack.com/rtm
+- https://api.slack.com/bot-users
+- https://github.com/google/google-api-nodejs-client
+- https://developers.google.com/drive/v3/web/quickstart/nodejs
+- https://developers.google.com/drive/v3/web/about-auth
+- https://developers.google.com/drive/v3/web/folder
+- http://momentjs.com/
+
 ## 봇 실행하기
 - `start.sh` 파일을 열고. 환경 변수를 필요에 따라 수정합니다.
   - `SLACK_API_TOKEN` : Slack API 토큰
