@@ -7,6 +7,16 @@ Youngbin Han(sukso96100@gmail.com)
 ## License
 MIT License
 
+## 봇 실행하기
+- start.sh 파일을 열고. 환경 변수를 필요에 따라 수정합니다.
+  - SLACK_API_TOKEN : Slack API 토큰;
+  - GOOGLE_CLIENT_SECRET_FILE : 클라이언트 비밀 파일(.json);
+    - (여기)[https://console.developers.google.com/start/api?id=drive] 에서 발급 받을 수 있습니다.
+    - 자세한 사항은 (여기)[https://developers.google.com/drive/v3/web/quickstart/nodejs#step_1_turn_on_the_api_name] 를 참조하세요.
+  - GOOGLD_DRIVE_TARGET_FOLDER_ID : 회의록 파일 올릴 구글 드라이브 폴더 ID;
+  - UTC_OFFSET : 시간대(예 : '+09:00');
+- 'npm start' 를 실행하여 봇을 실행합니다.
+
 ## 회의 기록 시작하기
 - 회의를 시작할 채널에서, "회의 시작" 을 입력합니다.
 - 그러면, 회의록 봇이 기록을 시작합니다.
