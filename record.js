@@ -22,6 +22,7 @@ var doWork = function(msg, userobj, rtm){
     if(mRecord==true){
       rtm.sendMessage("회의가 이미 진행 중입니다.", msg.channel);
     }else{
+      //회의 시작 처리
       mRecord = true;
       rtm.sendMessage(userobj.name+" 에 의해 회의가 시작되었습니다.", msg.channel);
       mUserObj = userobj;
@@ -31,13 +32,15 @@ var doWork = function(msg, userobj, rtm){
   }
 
   function endRecording(msg, userobj, rtm){
-    if(mUserObj==userobj&&mRecord==true){
+    if(mUserObj==userobj&&mRecord==true&&channelId==msg.channel){
+      //회의 종료 처리
       rtm.sendMessage(userobj.name+" 에 의해 회의가 끝났습니다.", msg.channel);
       mRecord = false;
       mUserObj = undefined;
       channelId = undefined;
       afterLogging(msg, rtm);
-    }else {
+    }else if(channelId==msg.channel){
+      //회의 시작한 사람이 종료하도록 처리
       rtm.sendMessage(userobj.name+" 만이 회의를 마칠 수 있습니다.", msg.channel);
     }
   }
@@ -84,6 +87,7 @@ function doLogging(msg, rtm){
         }
       }
     }else {
+      //대회 내용 기록
       data.push({"type":"talk", "time": moment().format("YYYY.MM.DD_HH:MM:SS_A_Z"),
        "text": rtm.dataStore.getUserById(msg.user).name + " : " + msg.text});
     }
@@ -91,6 +95,7 @@ function doLogging(msg, rtm){
 }
 
 function afterLogging(msg, rtm){
+  //JSON 파일로 저장
   fs.writeFileSync('record.json', JSON.stringify(data), 'utf8');
   jsontomd(msg, rtm);
 }
